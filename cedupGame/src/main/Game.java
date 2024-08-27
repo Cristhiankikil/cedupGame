@@ -32,7 +32,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static JFrame jframe;
     public static int WIDTH = 260;
     public static int HEIGHT = 140;
-    public static int SCALE = 4;
+    public static int SCALE = 5;
     private boolean isRunning = false; 
     private static Thread thread;
     
@@ -53,7 +53,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     private Sons som;
     
     
-    public int level = 1, levelmaximo = 1;
+    public static int level = 1;
+	public int levelmaximo = 2;
     public static int coletadas = 0; // Adicionando contador de rifas coletadas
    
 
@@ -73,7 +74,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         ceu = new Spritsheet("/ceunoite.png");
         player = new Player(0,0,16,16,sprite.getSprite(32, 0, 16, 16));
         entidades.add(player);
-        mundo = new Mundo("/level1.png");
+        mundo = new Mundo("/level"+level+".png");
     }
 
 	public void initFrame() {
@@ -107,6 +108,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     public void tick() {
+    	if(coletadas == 3) {
+			level++;
+			coletadas = 0;
+			if(level > levelmaximo) {
+				level = 1;
+			}
+			String Level = "level"+level+".png";
+			Mundo.newlevel(Level);
+		}
+    	
+    	
         if (gs == GameState.Menu) {
             menu.tick();
         } else if (gs == GameState.Game) {
@@ -171,32 +183,33 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
 
-    @Override
+ 
     public void run() {
-        long lastTime = System.nanoTime();
-        double amountOfTick = 60.0f;
-        double ms = 1000000000 / amountOfTick;
-        double delta = 0;
-        int frames = 0;
-        double timer = System.currentTimeMillis();
-        while (isRunning) {
-            long now = System.nanoTime();
-            delta += (now - lastTime) / ms;
-            lastTime = now;
-            if (delta > 1) {
-                tick();
-                render();
-                frames++;
-                delta--;
-            }
-            if (System.currentTimeMillis() - timer >= 1000) {
-                System.out.println("FPS: " + frames);
-                frames = 0;
-                timer += 1000;
-            }
-        }
-        stop();
-    }
+		long lastTime  = System.nanoTime();
+		double amountOfTicks = 60.0f;
+		double ms = 1000000000 / amountOfTicks;
+		double delta = 0;
+		int frames = 0;
+		double timer = System.currentTimeMillis();
+		while(isRunning) {
+			long now = System.nanoTime();
+			delta += (now - lastTime) / ms;
+			lastTime = now;
+			if(delta > 1) {
+				tick();
+				render();
+				frames++;
+				delta--;
+			}
+			if(System.currentTimeMillis() - timer >= 1000) {
+				System.out.println("FPS : " + frames );
+				frames = 0;
+				timer += 1000;
+			}
+		}
+		stop();
+		
+	}
 
     public void tocarSom(String s) {
         som = new Sons(s);
@@ -204,11 +217,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
         som.Parar();
     }
 
-    @Override
+    
     public void keyTyped(KeyEvent e) {}
 
     
-    @Override
+    
     public void keyPressed(KeyEvent e) {
         if (gs == GameState.Game) {
             switch (e.getKeyCode()) {
@@ -235,7 +248,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
     }
 
-    @Override
+    
     public void keyReleased(KeyEvent e) {
         if (gs == GameState.Game) {
             switch (e.getKeyCode()) {

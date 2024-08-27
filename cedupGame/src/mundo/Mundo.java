@@ -86,7 +86,7 @@ public class Mundo {
 		}
 		}
 
-	/*public static void  newlevel(String level) {
+	public static void  newlevel(String level) {
 		 Game.ceuvetor = new ArrayList<Ceu>();
 		 Game. entidades = new ArrayList<Entity>();
 		 Game.inimigo = new ArrayList<Inimigo>();
@@ -95,8 +95,8 @@ public class Mundo {
 		 Game.ceu = new Spritsheet("/ceunoite.png");
         Game.player = new Player(0,0,16,16, Game.sprite.getSprite(32, 0, 16, 16));
         Game.entidades.add(Game.player);
-        Game.mundo = new Mundo(level);
-	}*/
+        Game.mundo = new Mundo("/"+level);
+	}
 	public  void tick() {
 		// TODO Auto-generated method stub
 		

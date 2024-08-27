@@ -23,6 +23,10 @@ public class UserInterface {
         g.drawImage(Entity.rifinha, 55, 30, null);
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 9)); 
-        g.drawString("Rifas: " + Game.coletadas, 20, 40); // Mostra a quantidade de rifas coletadas
+        g.drawString("Rifas: " + Game.coletadas, 20, 40);
+        
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 9)); 
+        g.drawString("Nivel: " + Game.level, 215, 15);
     }
 }
