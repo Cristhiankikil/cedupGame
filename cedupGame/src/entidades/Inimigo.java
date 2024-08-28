@@ -14,17 +14,22 @@ public class Inimigo extends Entity {
     public int movimentacao = 1;
     public int frames = 0, maxFrames = 7, index = 0, maxIndex = 1;
     public int maskx = 0, masky = 0, maskw = 16, maskh = 16;
-    public BufferedImage[] inimigo;
+    public BufferedImage[] inimigoDireita;
+    public BufferedImage[] inimigoEsquerda;
     private Sons som;
     private boolean somTocado = false; // Flag para verificar se o som foi tocado
 
     public Inimigo(int x, int y, int width, int height, BufferedImage sprite) {
         super(x, y, width, height, sprite);
         
-        inimigo = new BufferedImage[2];
+        inimigoDireita = new BufferedImage[2];
+        inimigoEsquerda = new BufferedImage[2];
         
         for (int i = 0; i < 2; i++) {
-            inimigo[i] = Game.sprite.getSprite(112 + (i * 16), 0, 16, 16);
+        	inimigoEsquerda[i] = Game.sprite.getSprite(112 + (i * 16), 0, 16, 16);
+        }
+        for (int i = 0; i < 2; i++) {
+        	inimigoDireita[i] = Game.sprite.getSprite(128 - (i * 16), 16, 16, 16);
         }
         
         som = new Sons("/dano.wav"); // Inicializa o som
@@ -74,7 +79,12 @@ public class Inimigo extends Entity {
     }
 
     public void render(Graphics g) {
-        g.drawImage(inimigo[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+    	if(movimentacao == 1 && Game.player.getX() > this.getX()) {
+    		 g.drawImage(inimigoDireita[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+    	}
+    	if(movimentacao == 1 && Game.player.getX() < this.getX()) {
+   		 g.drawImage(inimigoEsquerda[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+   	}
     }
 
     public boolean novo(int nextx, int nexty) {
