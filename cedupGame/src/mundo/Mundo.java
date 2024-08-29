@@ -87,7 +87,7 @@ public class Mundo {
 		}
 
 	public static void  newlevel(String level) {
-		 Game.ceuvetor = new ArrayList<Ceu>();
+		Game.ceuvetor = new ArrayList<Ceu>();
 		 Game. entidades = new ArrayList<Entity>();
 		 Game.inimigo = new ArrayList<Inimigo>();
 		 Game.rifinha = new ArrayList<Rifinha>();

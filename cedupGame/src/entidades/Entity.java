@@ -12,7 +12,7 @@ public class Entity {
 
 	private int maskx, masky,mwidth,mheight;
 	
-	public static BufferedImage ceu = Game.ceu.getSprite(0, 0, 1471, 400);
+	public static BufferedImage ceu = Game.ceu.getSprite(0, 0, 96, 96);
 	public static BufferedImage chao = Game.sprite.getSprite(0, 0, 16, 16);
 	public static BufferedImage chaoGRAMA = Game.sprite.getSprite(16, 0, 16, 16);
 	public static BufferedImage empty = Game.sprite.getSprite(16, 32, 16, 16);

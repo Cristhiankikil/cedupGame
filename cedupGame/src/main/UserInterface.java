@@ -28,5 +28,10 @@ public class UserInterface {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 9)); 
         g.drawString("Nivel: " + Game.level, 215, 15);
+        
+        
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 8)); 
+        g.drawString("FPS: " + Game.fps, 19, 130);
     }
 }

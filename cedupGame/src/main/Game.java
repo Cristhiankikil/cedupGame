@@ -57,6 +57,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public int levelmaximo = 2;
     public static int coletadas = 0; // Adicionando contador de rifas coletadas
    
+    public static int fps = 0;
 
     public Game() {
     	
@@ -202,7 +203,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				delta--;
 			}
 			if(System.currentTimeMillis() - timer >= 1000) {
-				System.out.println("FPS : " + frames );
+				//System.out.println("FPS : " + frames );
+				fps = frames;
 				frames = 0;
 				timer += 1000;
 			}
