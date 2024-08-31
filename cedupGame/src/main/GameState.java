@@ -5,6 +5,7 @@ public enum GameState {
 	Game,
 	Menu,
 	GameOver,
-	Opcoes
+	Opcoes,
+	GameMenu
 	
 }

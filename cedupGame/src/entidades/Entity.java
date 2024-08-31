@@ -18,10 +18,12 @@ public class Entity {
 	public static BufferedImage empty = Game.sprite.getSprite(16, 32, 16, 16);
 	
 	public static BufferedImage grama = Game.sprite.getSprite(0, 32, 16, 16);
-	public static BufferedImage inimigo = Game.sprite.getSprite(112, 0, 16, 16);
+	public static BufferedImage inimigo = Game.sprite.getSprite(96, 0, 16, 16);
 	public static BufferedImage rifinha = Game.sprite.getSprite(80, 32, 16, 16);
+	public static BufferedImage merendeira = Game.sprite.getSprite(32, 48, 16, 16);
+	public static BufferedImage projetil = Game.sprite.getSprite(32, 64, 16, 16);
 	
-
+	
 	public static BufferedImage save = Game.sprite.getSprite(0, 16, 16, 16);
 	
 	protected double x;

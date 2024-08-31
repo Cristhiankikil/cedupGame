@@ -124,6 +124,7 @@ public class MenuHandler {
         } else if (selector == 2) {
             System.out.println("Sair!");
             // Adicione a lógica para sair do jogo
+            System.exit(1);
         }
     }
 }

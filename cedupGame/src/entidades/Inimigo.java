@@ -12,7 +12,7 @@ public class Inimigo extends Entity {
     
     public double speed = 0.5;
     public int movimentacao = 1;
-    public int frames = 0, maxFrames = 7, index = 0, maxIndex = 1;
+    public int frames = 0, maxFrames = 7, index = 0, maxIndex = 3;
     public int maskx = 0, masky = 0, maskw = 16, maskh = 16;
     public BufferedImage[] inimigoDireita;
     public BufferedImage[] inimigoEsquerda;
@@ -22,14 +22,14 @@ public class Inimigo extends Entity {
     public Inimigo(int x, int y, int width, int height, BufferedImage sprite) {
         super(x, y, width, height, sprite);
         
-        inimigoDireita = new BufferedImage[2];
-        inimigoEsquerda = new BufferedImage[2];
+        inimigoDireita = new BufferedImage[4];
+        inimigoEsquerda = new BufferedImage[4];
         
-        for (int i = 0; i < 2; i++) {
-        	inimigoEsquerda[i] = Game.sprite.getSprite(112 + (i * 16), 0, 16, 16);
+        for (int i = 0; i < 4; i++) {
+        	inimigoEsquerda[i] = Game.sprite.getSprite(96 + (i * 16), 0, 16, 16);
         }
-        for (int i = 0; i < 2; i++) {
-        	inimigoDireita[i] = Game.sprite.getSprite(128 - (i * 16), 16, 16, 16);
+        for (int i = 0; i < 4; i++) {
+        	inimigoDireita[i] = Game.sprite.getSprite(144 - (i * 16), 16, 16, 16);
         }
         
         som = new Sons("/dano.wav"); // Inicializa o som

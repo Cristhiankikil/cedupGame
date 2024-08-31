@@ -56,6 +56,10 @@ public class Mundo {
 						//Ceu
 						Ceu b = new Ceu(x*16,y*16,16,16,Entity.ceu);
 						Game.ceuvetor.add(b);
+					}else if(pixelAtual == 0xFFff00b1) {
+						
+						Merendeira m = new Merendeira(x*16,y*16,16,16,Entity.merendeira);
+						Game.merendeira.add(m);
 				}else if(pixelAtual == 0xFF1600ff) {
 					Check a = new Check(x*16,y*16,16,16,Entity.save);
 					Game.entidades.add(a);
@@ -91,6 +95,7 @@ public class Mundo {
 		 Game. entidades = new ArrayList<Entity>();
 		 Game.inimigo = new ArrayList<Inimigo>();
 		 Game.rifinha = new ArrayList<Rifinha>();
+		 Game.merendeira = new ArrayList<Merendeira>();
 		 Game.sprite = new Spritsheet("/spritesheet.png");
 		 Game.ceu = new Spritsheet("/ceunoite.png");
         Game.player = new Player(0,0,16,16, Game.sprite.getSprite(32, 0, 16, 16));

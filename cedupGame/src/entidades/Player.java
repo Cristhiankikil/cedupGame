@@ -37,13 +37,16 @@ public class Player extends Entity {
     
     public BufferedImage[] playerRight;
     public BufferedImage[] playerLeft;
-    
+    public BufferedImage playerParadoLeft;
+    public BufferedImage playerParadoRight;
     public int posx, posy;
 
     public Player(int x, int y, int width, int height, BufferedImage sprite) {
         super(x, y, width, height, sprite);
         playerRight = new BufferedImage[4];
         playerLeft = new BufferedImage[4];
+        playerParadoLeft = Game.sprite.getSprite(16, 0, 16, 16);
+        playerParadoRight = Game.sprite.getSprite(16, 16, 16, 16);
         
         for (int i = 0; i < 4; i++) {
             playerRight[i] = Game.sprite.getSprite(32 + (i * 16), 0, 16, 16);
@@ -201,13 +204,13 @@ public class Player extends Entity {
             g.drawImage(playerRight[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
         }
         if (direcaoAtual == direita && movimentacao == 0) {
-            g.drawImage(playerRight[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+            g.drawImage(playerParadoRight, this.getX() - Camera.x, this.getY() - Camera.y, null);
         }
         if (direcaoAtual == esquerda && movimentacao == 1) {
             g.drawImage(playerLeft[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
         }
         if (direcaoAtual == esquerda && movimentacao == 0) {
-            g.drawImage(playerLeft[0], this.getX() - Camera.x, this.getY() - Camera.y, null);
+            g.drawImage(playerParadoLeft, this.getX() - Camera.x, this.getY() - Camera.y, null);
         }
     }
 }

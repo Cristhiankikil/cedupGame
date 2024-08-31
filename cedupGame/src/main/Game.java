@@ -19,7 +19,9 @@ import effects.Sons;
 import entidades.Ceu;
 import entidades.Entity;
 import entidades.Inimigo;
+import entidades.Merendeira;
 import entidades.Player;
+import entidades.Projetil;
 import entidades.Rifinha;
 import graficos.Spritsheet;
 import mundo.Camera;
@@ -45,6 +47,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static List<Inimigo> inimigo;
     public static List<Ceu> ceuvetor;
     public static Spritsheet ceu;
+    public static List<Merendeira> merendeira;
+    public static List<Projetil> projetil;
+    
     
     public UserInterface ui;
     public static GameState gs = GameState.Menu;
@@ -58,6 +63,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static int coletadas = 0; // Adicionando contador de rifas coletadas
    
     public static int fps = 0;
+	
 
     public Game() {
     	
@@ -71,6 +77,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
         entidades = new ArrayList<Entity>();
         inimigo = new ArrayList<Inimigo>();
         rifinha = new ArrayList<Rifinha>();
+        merendeira = new ArrayList<Merendeira>();
+        projetil = new ArrayList<Projetil>();
         sprite = new Spritsheet("/spritesheet.png");
         ceu = new Spritsheet("/ceunoite.png");
         player = new Player(0,0,16,16,sprite.getSprite(32, 0, 16, 16));
@@ -133,6 +141,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
             for (int i = 0; i < rifinha.size(); i++) {
                 rifinha.get(i).tick();
             }
+            for (int i = 0; i < merendeira.size(); i++) {
+            	merendeira.get(i).tick();
+            }
+            for (int i = 0; i < projetil.size(); i++) {
+            	projetil.get(i).tick();
+            }
         }
     }
 
@@ -170,8 +184,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
             for (Inimigo inimigoItem : inimigo) {
                 inimigoItem.render(g);
             }
+            for(Merendeira merendaItem : merendeira) {
+            	merendaItem.render(g);
+            }
             for (Rifinha rifinhaItem : rifinha) {
             	rifinhaItem.render(g);
+            }
+            for (Projetil projetilItem : projetil) {
+            	projetilItem.render(g);
             }
             ui.render(g);
         }
