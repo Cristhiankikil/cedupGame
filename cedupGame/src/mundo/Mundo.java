@@ -44,6 +44,11 @@ public class Mundo {
 	                    // chão
 	                	Solido solido = new Solido(x*16,y*16,16,16,Entity.chao);
 						Game.entidades.add(solido);
+	                } else if(pixelAtual == 0xFF654704) {
+	                    // Espinho
+	                	Solido solido = new Solido(x*16,y*16,16,16,Entity.spike);
+	                	//Spike spike = new Spike(x*16,y*16,16,16,Entity.spike);
+						Game.entidades.add(solido);
 	                }else if(pixelAtual == 0xFFff0000) {
 	                	// Inimigo
 						Inimigo a = new Inimigo(x*16,y*16,16,16,Entity.inimigo);
@@ -60,10 +65,10 @@ public class Mundo {
 						
 						Merendeira m = new Merendeira(x*16,y*16,16,16,Entity.merendeira);
 						Game.merendeira.add(m);
-				}else if(pixelAtual == 0xFF1600ff) {
-					Check a = new Check(x*16,y*16,16,16,Entity.save);
-					Game.entidades.add(a);
-				}
+					}else if(pixelAtual == 0xFF1600ff) {
+						Check a = new Check(x*16,y*16,16,16,Entity.save);
+						Game.entidades.add(a);
+					}
 	              
 	                
 	         

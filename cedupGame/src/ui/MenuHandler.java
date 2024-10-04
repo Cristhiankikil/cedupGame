@@ -20,7 +20,7 @@ public class MenuHandler {
     private Sons som;
     private int delay = 10; // Define um valor para o delay
     private int delayCounter = 0; // Contador para controlar o delay
-
+    private Instrucoes instrucoes;
 
     public MenuHandler(Game game) {
         this.game = game;
@@ -117,10 +117,12 @@ public class MenuHandler {
         // Adicione a lógica para lidar com a opção selecionada
         if (selector == 0) {
             System.out.println("Iniciar o jogo!");
-            Game.GotoGame();
+            //Game.GotoGame();
+            Game.instructions(); 
         } else if (selector == 1) {
             System.out.println("Opções!");
             // Adicione a lógica para abrir o menu de opções
+            Game.instructions(); 
         } else if (selector == 2) {
             System.out.println("Sair!");
             // Adicione a lógica para sair do jogo

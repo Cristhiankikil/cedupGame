@@ -46,7 +46,7 @@ public class Projetil extends Entity {
 
         // Verifica se o projétil colide com o jogador
         if (colideComPlayer()) {
-            Game.player.life -= 10;
+            Game.player.life -= 50;
             if (!somTocado) {
                 som.Tocar(); // Toca o som se ainda não foi tocado
                 somTocado = true; // Marca o som como tocado

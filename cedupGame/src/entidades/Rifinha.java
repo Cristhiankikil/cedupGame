@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import main.Game;
+import main.GameState;
 import mundo.Camera;
 
 public class Rifinha extends Entity {
@@ -37,6 +38,7 @@ public class Rifinha extends Entity {
             System.out.println("Colidiu com o jogador!");
             Game.coletadas++;  // Incrementa o contador de rifas coletadas
             Game.entidades.remove(this); // Remove a rifa após coleta
+            Game.gs = GameState.perguntinha; 
         }
     }
 

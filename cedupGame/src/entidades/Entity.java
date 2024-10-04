@@ -23,7 +23,11 @@ public class Entity {
 	public static BufferedImage merendeira = Game.sprite.getSprite(32, 48, 16, 16);
 	public static BufferedImage projetil = Game.sprite.getSprite(32, 64, 16, 16);
 	
+	public static BufferedImage controles = Game.sprite.getSprite(48, 80, 32, 16);
+	public static BufferedImage espaco = Game.sprite.getSprite(80, 80, 32, 16);
 	
+	
+	public static BufferedImage spike = Game.sprite.getSprite(0, 32, 16, 16);
 	public static BufferedImage save = Game.sprite.getSprite(0, 16, 16, 16);
 	
 	protected double x;

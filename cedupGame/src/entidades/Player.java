@@ -58,7 +58,6 @@ public class Player extends Entity {
     
     public void tick() {
         movimentacao = 0;
-
         // Movimentação horizontal
         if (right && !colisao((int)(x + speed), this.getY())) {
             x += speed;
@@ -104,7 +103,7 @@ public class Player extends Entity {
             }
         }
         
-        if (damage(this.getX(), this.getY())) {
+        if (damage(this.getX(), this.getY()-8)) {
             life -= 0.5;
         }
         if(check(this.getX(), this.getY())){
@@ -192,7 +191,7 @@ public class Player extends Entity {
         }
         return false;
     }
-
+    
     public void tocarSom(String s) {
         som = new Sons(s);
         som.Tocar();

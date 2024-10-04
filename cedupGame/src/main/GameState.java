@@ -6,6 +6,8 @@ public enum GameState {
 	Menu,
 	GameOver,
 	Opcoes,
-	GameMenu
+	GameMenu,
+	intrucoes,
+	perguntinha
 	
 }

@@ -11,22 +11,29 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
+
+import database.Perguntas;
+import database.QuestionarioBd;
 import effects.Sons;
 import entidades.Ceu;
 import entidades.Entity;
 import entidades.Inimigo;
 import entidades.Merendeira;
+import entidades.PerguntasTela;
 import entidades.Player;
 import entidades.Projetil;
 import entidades.Rifinha;
+import entidades.Spike;
 import graficos.Spritsheet;
+import joption.InicioOpcoes;
 import mundo.Camera;
 import mundo.Mundo;
-import ui.MenuHandler;
+import ui.*;
 
 public class Game extends Canvas implements Runnable, KeyListener {
 
@@ -50,13 +57,19 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static List<Merendeira> merendeira;
     public static List<Projetil> projetil;
     
+    public ArrayList<Perguntas> lista;
+    public QuestionarioBd q;
     
     public UserInterface ui;
     public static GameState gs = GameState.Menu;
     public MenuHandler menu;
+    public Instrucoes instrucoes;
     public static Mundo mundo;
     private Sons som;
+    public PerguntasTela perguntas;
     
+    public static String codQuestionarioTemp = "";
+    public static int codJogada = 0;
     
     public static int level = 1;
 	public int levelmaximo = 2;
@@ -70,8 +83,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
         addKeyListener(this);
         this.setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
         initFrame();
+        lista = new ArrayList();
+	    q = new QuestionarioBd(); 
         ui = new UserInterface();
         menu = new MenuHandler(this);
+        instrucoes = new Instrucoes(this);
+        perguntas = new PerguntasTela(this);
         fundo = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         ceuvetor = new ArrayList<Ceu>();
         entidades = new ArrayList<Entity>();
@@ -82,6 +99,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         sprite = new Spritsheet("/spritesheet.png");
         ceu = new Spritsheet("/ceunoite.png");
         player = new Player(0,0,16,16,sprite.getSprite(32, 0, 16, 16));
+        
         entidades.add(player);
         mundo = new Mundo("/level"+level+".png");
     }
@@ -97,10 +115,25 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	}
 
     public static void main(String[] args) {
-        Game game = new Game();
+    	String nomePlayer = InicioOpcoes.inicio();
+    	String questionarioCod = InicioOpcoes.EscolheJogo();
+    	QuestionarioBd quest =  new QuestionarioBd();
+    	
+    	
+    	codJogada=quest.CriaJogada(nomePlayer, questionarioCod);
+    	
+    	codQuestionarioTemp = questionarioCod;
+    	
+    	
+    	
+    	Game game = new Game();
         game.start();
     }
-
+    
+    public int RetornaCod() {
+    	return this.codJogada;
+    }
+    
     public synchronized void start() {
         thread = new Thread(this);
         isRunning = true; 
@@ -130,6 +163,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
     	
         if (gs == GameState.Menu) {
             menu.tick();
+            
+        } else if(gs == GameState.intrucoes) {
+        	instrucoes.tick();
+        } else if(gs == GameState.perguntinha) {
+        	
+        	perguntas.tick();
         } else if (gs == GameState.Game) {
             mundo.tick();
             for (int i = 0; i < entidades.size(); i++) {
@@ -147,6 +186,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             for (int i = 0; i < projetil.size(); i++) {
             	projetil.get(i).tick();
             }
+            
         }
     }
 
@@ -162,9 +202,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
         Graphics g = fundo.getGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WIDTH, HEIGHT);
-
+        
         if (gs == GameState.Menu) {
             menu.render(g);
+            
        /* } else if (gs == GameState.GameOver) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 24));
@@ -173,7 +214,25 @@ public class Game extends Canvas implements Runnable, KeyListener {
             g.setFont(new Font("Arial", Font.BOLD, 10));
             fontM = g.getFontMetrics();
             g.drawString("Restart?", WIDTH / 2 - fontM.stringWidth("Restart?") / 2, 100);
-        */} else if (gs == GameState.Game) {
+        */	} else if (gs == GameState.intrucoes) {
+        		instrucoes.render(g);
+            }else if (gs == GameState.perguntinha) {
+            	if(lista.size()==0) {
+	     	        try {
+	     				lista = q.buscaDaJogada(codJogada);
+	     			} catch (ClassNotFoundException e) {
+	     				
+	     				e.printStackTrace();
+	     			} catch (SQLException e) {
+	     				
+	     				e.printStackTrace();
+	     			}
+            	}
+            	if(lista.size()>0) {
+            	
+            	perguntas.render(g, lista);
+            	}
+            } else if (gs == GameState.Game) {
             mundo.render(g);
             for (Ceu ceuItem : ceuvetor) {
                 ceuItem.render(g);
@@ -203,8 +262,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
         buffer.show();
     }
 
+    
 
- 
     public void run() {
 		long lastTime  = System.nanoTime();
 		double amountOfTicks = 60.0f;
@@ -267,7 +326,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
             }
         } else if (gs == GameState.Menu) {
             menu.KeyPress(e);
-        }
+        }else if (gs == GameState.perguntinha) {
+                perguntas.KeyPress(e);
+        
+    } else if (gs == GameState.intrucoes) {
+    	instrucoes.KeyPress(e);
+    }
+    	
     }
 
     
@@ -294,6 +359,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
             }
         } else if (gs == GameState.Menu) {
             menu.KeyPress(e);
+        }else if (gs == GameState.perguntinha) {
+            perguntas.KeyPress(e);
+        } else if (gs == GameState.intrucoes) {
+        	instrucoes.KeyPress(e);
+        
         } else if (gs == GameState.GameOver) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 //resetGame();
@@ -305,11 +375,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static void GotoGame() {
         gs = GameState.Game;
     }
+    public static void BackToMenu() {
+        gs = GameState.Menu;
+    }
 
     public static void EndGame() {
         gs = GameState.GameOver;
     }
-
+    public static void instructions() {
+        gs = GameState.intrucoes;
+    }
    /* public void resetGame() {
         // Limpa listas de entidades
         entidades.clear();
